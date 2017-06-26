@@ -18,3 +18,9 @@ char* replaceAllOcuresOfCharFromString(char* str, char oldc, char newc) {
     }
     return str;
 }
+int main(){
+char test1 [] = "asdfafdsa";
+char test2 [] = "asdfafdsa";
+printf("%s\n",replaceAllOcuresOfCharFromString(test1,'a','z'));
+printf("%s\n",removeAllOcuresOfCharFromString(test2,'a'));    
+}
