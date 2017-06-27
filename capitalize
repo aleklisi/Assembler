@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<ctype.h>
+
+char *capitalizeC(char *string){
+    char* s = string; 
+    while (*s != '0'){
+       *s = toupper(*s);
+        s++;
+      // printf("%s\n",string);
+    }
+    return string;
+}
+
+char *capitalizeA(char *string);
+
+int main(){
+	char test [] = "asdfhASDF1234";
+	char test2 [] = "AbaBaB";
+	printf("Test 1 %s \n", capitalizeC(test2));
+	printf("Test 1 %s \n", capitalizeC(test));
+	printf("Test 2 %s \n", capitalizeA(test2));
+	printf("Test 2 %s \n", capitalizeA(test));
+	return 0;
+}
+
+    .type capitalizeA, @function
+    .global capitalizeA
+
+capitalizeA:
+ pushq   %rbp
+        movq    %rsp, %rbp
+        subq    $32, %rsp
+        movq    %rdi, -24(%rbp)
+        movq    -24(%rbp), %rax
+        movq    %rax, -8(%rbp)
+.L3:
+        movq    -8(%rbp), %rax
+        movzbl  (%rax), %eax
+        cmpb    $48, %al
+        je      .L2
+        movq    -8(%rbp), %rax
+        movzbl  (%rax), %eax
+        movsbl  %al, %eax
+        movl    %eax, %edi
+        call    toupper
+        movl    %eax, %edx
+        movq    -8(%rbp), %rax
+        movb    %dl, (%rax)
+        addq    $1, -8(%rbp)
+        jmp     .L3
+.L2:
+        movq    -24(%rbp), %rax
+        leave
+        ret
