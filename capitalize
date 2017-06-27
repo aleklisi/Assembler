@@ -1,3 +1,8 @@
+//kompilacja linkowanie: 
+// gcc -o capitalize capitalize.c capitalize_asm.s
+// uruchomienie 
+// ./capitalize
+
 #include<stdio.h>
 #include<ctype.h>
 
