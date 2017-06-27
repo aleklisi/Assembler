@@ -4,9 +4,12 @@
 char *capitalizeC(char *string){
     char* s = string; 
     while (*s != '0'){
-       *s = toupper(*s);
+        if((*s == '!') || (*s == '?') || (*s == '.')  ){
+            s++;
+            
+            *s = toupper(*s);
+        }
         s++;
-      // printf("%s\n",string);
     }
     return string;
 }
@@ -27,17 +30,31 @@ int main(){
     .global capitalizeA
 
 capitalizeA:
- pushq   %rbp
+        pushq   %rbp
         movq    %rsp, %rbp
         subq    $32, %rsp
         movq    %rdi, -24(%rbp)
         movq    -24(%rbp), %rax
         movq    %rax, -8(%rbp)
-.L3:
+.L5:
         movq    -8(%rbp), %rax
         movzbl  (%rax), %eax
         cmpb    $48, %al
         je      .L2
+        movq    -8(%rbp), %rax
+        movzbl  (%rax), %eax
+        cmpb    $33, %al
+        je      .L3
+        movq    -8(%rbp), %rax
+        movzbl  (%rax), %eax
+        cmpb    $63, %al
+        je      .L3
+        movq    -8(%rbp), %rax
+        movzbl  (%rax), %eax
+        cmpb    $46, %al
+        jne     .L4
+.L3:
+        addq    $1, -8(%rbp)
         movq    -8(%rbp), %rax
         movzbl  (%rax), %eax
         movsbl  %al, %eax
@@ -46,8 +63,9 @@ capitalizeA:
         movl    %eax, %edx
         movq    -8(%rbp), %rax
         movb    %dl, (%rax)
+.L4:
         addq    $1, -8(%rbp)
-        jmp     .L3
+        jmp     .L5
 .L2:
         movq    -24(%rbp), %rax
         leave
